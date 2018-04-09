@@ -12,7 +12,7 @@ public class MessageListener implements IListener<MessageReceivedEvent> {
 
     private IDiscordClient client;
     private HashMap<String, BotAction> botFunctions;
-    private final String BOT_PREFIX = "/";
+    private final char BOT_PREFIX = '/';
     private HashMap<IChannel,ChannelPlayer> channelPlayers;
 
     public MessageListener(IDiscordClient c){
@@ -103,8 +103,10 @@ public class MessageListener implements IListener<MessageReceivedEvent> {
             action.run(event);
             System.out.println("Action completed!");
         }else{
-            System.out.println("Invalid command: " + msg);
-            event.getChannel().sendMessage("U DO NOT KNO DAE COMANDS...");
+            if(msg.charAt(0) == BOT_PREFIX) {
+                System.out.println("Invalid command: " + msg);
+                event.getChannel().sendMessage("U DO NOT KNO DAE COMANDS...");
+            }
         }
     }
 

@@ -25,6 +25,7 @@ public class ChannelPlayer {
     private AudioPlayer player;
     private TrackScheduler trackScheduler;
     private IVoiceChannel channel;
+    private Thread idleTime;
 
     public ChannelPlayer(IGuild guild, IVoiceChannel channel){
 
@@ -44,6 +45,7 @@ public class ChannelPlayer {
         audioManager.setAudioProvider(provider);
 
         player.addListener(trackScheduler);
+
     }
 
     public IVoiceChannel getChannel() {
@@ -79,6 +81,9 @@ public class ChannelPlayer {
                 // Notify the user that everything exploded
             }
         });
+
+        idleTime = new Thread(new IdleTimer(this));
+        idleTime.start();
     }
 
     public void pause(){
@@ -94,7 +99,13 @@ public class ChannelPlayer {
         trackScheduler.nextTrack();
     }
 
+    public boolean playerBusy(){
+        AudioTrack track = player.getPlayingTrack();
+        return track != null && !player.isPaused();
+    }
+
     public void shutdown(){
+        channel.leave();
         playerManager.shutdown();
     }
 
