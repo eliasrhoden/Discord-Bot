@@ -27,6 +27,7 @@ public class ChannelPlayer {
     private IVoiceChannel channel;
     private Thread idleTime;
     private final int PLAYER_FRAME_BUFFER = 20;
+    private boolean playerKilled;
 
     public ChannelPlayer(IGuild guild, IVoiceChannel channel){
 
@@ -47,7 +48,7 @@ public class ChannelPlayer {
 
         player.addListener(trackScheduler);
         player.setFrameBufferDuration(PLAYER_FRAME_BUFFER);
-
+        playerKilled = false;
     }
 
     public IVoiceChannel getChannel() {
@@ -109,6 +110,11 @@ public class ChannelPlayer {
     public void shutdown(){
         channel.leave();
         playerManager.shutdown();
+        playerKilled = true;
+    }
+
+    public boolean playerKilled(){
+        return playerKilled;
     }
 
 }

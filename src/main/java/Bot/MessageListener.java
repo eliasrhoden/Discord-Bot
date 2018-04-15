@@ -84,6 +84,14 @@ public class MessageListener implements IListener<MessageReceivedEvent> {
             ChannelPlayer player = new ChannelPlayer(event.getGuild(),voiceChannel);
             channelPlayers.put(channel,player);
         }
+        ChannelPlayer player = channelPlayers.get(channel);
+
+        if(player.playerKilled()){
+            channelPlayers.remove(channel);
+            player = new ChannelPlayer(event.getGuild(),voiceChannel);
+            channelPlayers.put(channel,player);
+        }
+
         channelPlayers.get(channel).playSong(url);
         channelPlayers.get(channel).resume();
     }
