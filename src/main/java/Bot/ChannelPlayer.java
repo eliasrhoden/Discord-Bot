@@ -26,6 +26,7 @@ public class ChannelPlayer {
     private TrackScheduler trackScheduler;
     private IVoiceChannel channel;
     private Thread idleTime;
+    private final int PLAYER_FRAME_BUFFER = 8;
 
     public ChannelPlayer(IGuild guild, IVoiceChannel channel){
 
@@ -45,6 +46,7 @@ public class ChannelPlayer {
         audioManager.setAudioProvider(provider);
 
         player.addListener(trackScheduler);
+        player.setFrameBufferDuration(PLAYER_FRAME_BUFFER);
 
     }
 
