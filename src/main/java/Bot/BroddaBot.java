@@ -14,6 +14,7 @@ public class BroddaBot {
     private IDiscordClient client;
     private EventDispatcher eventDispatcher;
 
+
     public BroddaBot(String discordToken){
         this.client = createClient(discordToken);
 

@@ -25,6 +25,8 @@ public class MessageListener implements IListener<MessageReceivedEvent> {
      *  Here all bot functions are created and mapped to commands.
      * */
 
+    // eye of the tiger http://www.math.chalmers.se/~palbin/Eye_of_the_Tiger.mp3
+
     public HashMap<String, BotAction> createBotFunctions(){
         HashMap<String, BotAction> functions = new HashMap<>();
 
