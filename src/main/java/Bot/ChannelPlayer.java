@@ -26,7 +26,7 @@ public class ChannelPlayer {
     private TrackScheduler trackScheduler;
     private IVoiceChannel channel;
     private Thread idleTime;
-    private final int PLAYER_FRAME_BUFFER = 20;
+    private final int PLAYER_FRAME_BUFFER = 30;
     private boolean playerKilled;
 
     public ChannelPlayer(IGuild guild, IVoiceChannel channel){
