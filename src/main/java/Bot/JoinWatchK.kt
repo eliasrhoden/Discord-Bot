@@ -17,13 +17,13 @@ class JoinWatchK(val bot:BroddaBot):Thread(){
 
     override fun run(){
         while(true){
-            println("Lifebeat theme scan...")
+            //println("Lifebeat theme scan...")
             Thread.sleep((SCAN_PERIOD_S*1000).toLong())
             val currentlyConnectedUsers = getAllConnectedUsers()
             val freshUsers = getNewJoinedUsers(currentlyConnectedUsers)
             joinedUsers = currentlyConnectedUsers
             if(freshUsers.size>0)
-                println("Freshlyjoined users")
+                println("Found freshly joined users!")
             for(user in freshUsers){
                 println(user)
                 if(userSongs.containsKey(user.toLowerCase())){
