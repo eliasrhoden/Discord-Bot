@@ -98,6 +98,14 @@ public class BroddaBot {
         return firstChar == BOT_PREFIX;
     }
 
+    public boolean busyPlayingIn(IVoiceChannel channel){
+        if(channelPlayers.containsKey(channel)){
+            ChannelPlayer pl = channelPlayers.get(channel);
+            return pl.playerBusy();
+        }else
+            return false;
+    }
+
     public List<IVoiceChannel> getAllConnectedVoiceChannels(){
         return client.getVoiceChannels();
     }

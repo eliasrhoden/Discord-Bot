@@ -16,16 +16,15 @@ public class IdleTimer implements Runnable {
     @Override
     public void run() {
         do {
-            for (int i = 0; i < TIME_OUT_MIN; i++)
-                sleepMinute();
+            sleepMinutes(TIME_OUT_MIN);
         }while(playerToClose.playerBusy());
         playerToClose.shutdown();
     }
 
-    private void sleepMinute(){
-        long oneMinuteInMillis = 60 * 1000;
+    private void sleepMinutes(int minutes){
+        long sleepTimeMins = minutes * 60 * 1000;
         try {
-            Thread.sleep(oneMinuteInMillis);
+            Thread.sleep(sleepTimeMins);
         } catch (InterruptedException e) {
         }
     }

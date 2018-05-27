@@ -11,7 +11,7 @@ class JoinWatchK(val bot:BroddaBot):Thread(){
      * the bot joins the channel and plays a theme son (JIGGA JIGGA)
      * Trying to do it in Kotlin cuz im funky
      * */
-    val SCAN_PERIOD_S = 10
+    val SCAN_PERIOD_S = 2
     var joinedUsers = getAllConnectedUsers()
     val userSongs = createUsersSongs()
 
@@ -31,7 +31,6 @@ class JoinWatchK(val bot:BroddaBot):Thread(){
                     playThemeSong(user)
                 }
             }
-
         }
     }
 
@@ -42,13 +41,18 @@ class JoinWatchK(val bot:BroddaBot):Thread(){
             if(users.size>0){
                 val user = users[0]
                 val vch = bot.findChannelWithUser(user)
-                val songUrl = userSongs.get(user.name)!!.songUrl
-                val dur = userSongs.get(user.name)!!.durations
-                println("PLAYIGN SON")
-                println(songUrl)
-                bot.playSong(songUrl,vch)
-                val timer = ThemeSongTimer(bot.getVoiceChannelPlayer(vch),dur)
-                timer.start()
+                if(!bot.busyPlayingIn(vch)) {
+                    val songUrl = userSongs.get(user.name)!!.songUrl
+                    val dur = userSongs.get(user.name)!!.durations
+                    println("PLAYIGN SON")
+                    println(songUrl)
+                    bot.playSong(songUrl, vch)
+                    val timer = ThemeSongTimer(bot.getVoiceChannelPlayer(vch), dur)
+                    timer.start()
+
+                } else{
+                    println("Bot is busy in channel, not playing themesong... :(")
+                }
                 return
             }
         }
@@ -82,7 +86,7 @@ class JoinWatchK(val bot:BroddaBot):Thread(){
     }
 
     /**
-     * Create the mao with users that have THEME songs
+     * Create the map with users that have THEME songs
      * */
 
     private fun createUsersSongs():HashMap<String,ThemeSong>{
