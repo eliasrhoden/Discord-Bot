@@ -95,7 +95,7 @@ class JoinWatchK(val bot:BroddaBot):Thread(){
         res.put("vandplog", ThemeSong("https://www.youtube.com/watch?v=TXgpwKfmsGg",20))
         res.put("nisse", ThemeSong("https://youtu.be/w2XMBN1o2fk?t=40s",20))
         res.put("whoppr", ThemeSong("https://youtu.be/geic-ci56xg?t=5s",20))
-        res.put("hypp", ThemeSong("https://youtu.be/F3HK628agYI?t=32s",20))
+        res.put("hypp", ThemeSong("https://www.youtube.com/watch?v=hLTgQ5SC-PU",23))
 
         return res
     }
