@@ -42,8 +42,8 @@ class JoinWatchK(val bot:BroddaBot):Thread(){
                 val user = users[0]
                 val vch = bot.findChannelWithUser(user)
                 if(!bot.busyPlayingIn(vch)) {
-                    val songUrl = userSongs.get(user.name)!!.songUrl
-                    val dur = userSongs.get(user.name)!!.durations
+                    val songUrl = userSongs.get(user.name.toLowerCase())?.songUrl ?: "https://youtu.be/w2XMBN1o2fk?t=40s";
+                    val dur = userSongs.get(user.name.toLowerCase())?.durations ?: 20;
                     println("PLAYIGN SON")
                     println(songUrl)
                     bot.playSong(songUrl, vch)
