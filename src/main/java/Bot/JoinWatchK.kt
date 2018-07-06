@@ -42,8 +42,8 @@ class JoinWatchK(val bot:BroddaBot):Thread(){
                 val user = users[0]
                 val vch = bot.findChannelWithUser(user)
                 if(!bot.busyPlayingIn(vch)) {
-                    val songUrl = userSongs.get(user.name.toLowerCase())?.songUrl ?: "https://youtu.be/w2XMBN1o2fk?t=40s";
-                    val dur = userSongs.get(user.name.toLowerCase())?.durations ?: 20;
+                    val songUrl = userSongs.get(user.name.toLowerCase())?.songUrl ?: "https://youtu.be/w2XMBN1o2fk?t=40s"
+                    val dur = userSongs.get(user.name.toLowerCase())?.durations ?: 20
                     println("PLAYIGN SON")
                     println(songUrl)
                     bot.playSong(songUrl, vch)
@@ -92,10 +92,10 @@ class JoinWatchK(val bot:BroddaBot):Thread(){
     private fun createUsersSongs():HashMap<String,ThemeSong>{
         val res = HashMap<String,ThemeSong>()
 
-        res.put("vandplog", ThemeSong("https://www.youtube.com/watch?v=TXgpwKfmsGg",20))
-        res.put("nisse", ThemeSong("https://youtu.be/w2XMBN1o2fk?t=40s",20))
-        res.put("whoppr", ThemeSong("https://youtu.be/geic-ci56xg?t=5s",20))
-        res.put("hypp", ThemeSong("https://www.youtube.com/watch?v=hLTgQ5SC-PU",23))
+        res.put("vandplog", ThemeSong("https://www.youtube.com/watch?v=TXgpwKfmsGg",25))
+        res.put("nisse", ThemeSong("https://www.youtube.com/watch?v=UIgZpeWmpZA",30))
+        res.put("whoppr", ThemeSong("https://youtu.be/geic-ci56xg?t=5s",25))
+        res.put("hypp", ThemeSong("https://www.youtube.com/watch?v=hLTgQ5SC-PU",25))
 
         return res
     }
