@@ -11,6 +11,7 @@ import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import sx.blah.discord.handle.audio.IAudioManager;
+import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IVoiceChannel;
 
@@ -28,6 +29,7 @@ public class ChannelPlayer {
     private Thread idleTime;
     private final int PLAYER_FRAME_BUFFER = 30;
     private boolean playerKilled;
+    private IChannel txtChannelForErrorMsg;
 
     public ChannelPlayer(IGuild guild, IVoiceChannel channel){
 
@@ -49,6 +51,10 @@ public class ChannelPlayer {
         player.addListener(trackScheduler);
         player.setFrameBufferDuration(PLAYER_FRAME_BUFFER);
         playerKilled = false;
+    }
+
+    public void setTxtChannel(IChannel ch){
+        txtChannelForErrorMsg = ch;
     }
 
     public IVoiceChannel getChannel() {
@@ -76,17 +82,25 @@ public class ChannelPlayer {
             public void noMatches() {
                 System.out.println("No matches!");
                 // Notify the user that we've got nothing
+                sendMsg("I COULD NOT FIND DAE SONG!");
             }
 
             @Override
             public void loadFailed(FriendlyException throwable) {
                 System.out.println("Load failed!");
+                sendMsg("THE SONG COULD NOT BE LOADED!");
                 // Notify the user that everything exploded
             }
         });
 
         idleTime = new Thread(new IdleTimer(this));
         idleTime.start();
+    }
+
+    private void sendMsg(String msg){
+        if(txtChannelForErrorMsg != null){
+            txtChannelForErrorMsg.sendMessage(msg);
+        }
     }
 
     public void pause(){

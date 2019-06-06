@@ -50,14 +50,15 @@ public class BroddaBot {
 
         BotAction joinVoice = (event) -> {
             IVoiceChannel channel = findChannelWithUser(event.getAuthor());
+            channelPlayers.get(channel).setTxtChannel(event.getChannel());
             channel.join();
         };
         functions.put( "joinVoice",joinVoice);
 
-        BotAction playJigga = (event) -> playSong("https://www.youtube.com/watch?v=TXgpwKfmsGg",findChannelWithUser(event.getAuthor()));
+        BotAction playJigga = (event) -> playSong("https://www.youtube.com/watch?v=TXgpwKfmsGg",findChannelWithUser(event.getAuthor()),event);
         functions.put( "jiggajigga",playJigga);
 
-        BotAction playPitbull = (event) -> playSong("https://www.youtube.com/watch?v=Rfz6LMVnBVI",findChannelWithUser(event.getAuthor()));
+        BotAction playPitbull = (event) -> playSong("https://www.youtube.com/watch?v=Rfz6LMVnBVI",findChannelWithUser(event.getAuthor()),event);
         functions.put( "pitbull",playPitbull);
 
         BotAction bruddaTest = (event) -> event.getChannel().sendMessage("DO U KNO DAE WAE?");
@@ -69,7 +70,7 @@ public class BroddaBot {
         BotAction playSong = (event) -> {
             String cmd = event.getMessage().getContent();
             String[] parts = cmd.split(" ");
-            playSong(parts[1],findChannelWithUser(event.getAuthor()));
+            playSong(parts[1],findChannelWithUser(event.getAuthor()),event);
         };
         functions.put( "play",playSong);
 
@@ -128,13 +129,16 @@ public class BroddaBot {
         }
     }
 
-    public void playSong(String url, IVoiceChannel channel){
+    public void playSong(String url, IVoiceChannel channel, MessageReceivedEvent event){
 
         if(!channelPlayers.containsKey(channel)){
             ChannelPlayer player = new ChannelPlayer(channel.getGuild(),channel);
             channelPlayers.put(channel,player);
         }
         ChannelPlayer player = channelPlayers.get(channel);
+
+        if(event != null)
+            player.setTxtChannel(event.getChannel());
 
         if(player.playerKilled()){
             channelPlayers.remove(channel);
@@ -148,7 +152,7 @@ public class BroddaBot {
 
     public IVoiceChannel findChannelWithUser(IUser u){
         IVoiceChannel rresult = null;
-
+        loopBoi:
         for(IVoiceChannel v : client.getVoiceChannels()){
             System.out.println("LOOKING IN CHANNEL: " + v.getName());
             for(IUser user:v.getConnectedUsers()){
@@ -156,7 +160,7 @@ public class BroddaBot {
                 if(user.getName() == u.getName()){
                     rresult = v;
                     System.out.println("FOUND CHANNEL!");
-                    break;
+                    break loopBoi;
                 }
             }
         }

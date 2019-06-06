@@ -46,7 +46,7 @@ class JoinWatchK(val bot:BroddaBot):Thread(){
                     val dur = userSongs.get(user.name.toLowerCase())?.durations ?: 20
                     println("PLAYIGN SON")
                     println(songUrl)
-                    bot.playSong(songUrl, vch)
+                    bot.playSong(songUrl, vch,null)
                     val timer = ThemeSongTimer(bot.getVoiceChannelPlayer(vch), dur)
                     timer.start()
 
